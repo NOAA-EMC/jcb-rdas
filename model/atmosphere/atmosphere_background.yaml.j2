@@ -1,0 +1,5 @@
+datapath: {{ atmosphere_background_path }}
+filetype: fms restart
+datetime: "{{ atmosphere_background_time_iso }}"
+filenames: [ {{ atmosphere_variational_history_prefix }}cubed_sphere_grid_atmf006.nc, {{ atmosphere_variational_history_prefix }}cubed_sphere_grid_sfcf006.nc ]
+state variables: [eastward_wind,northward_wind,u_component_of_native_D_grid_wind,v_component_of_native_D_grid_wind,air_temperature,air_pressure_thickness,water_vapor_mixing_ratio_wrt_moist_air,cloud_liquid_ice,cloud_liquid_water,ozone_mass_mixing_ratio,phis,f10m]

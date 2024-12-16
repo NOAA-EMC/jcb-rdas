@@ -1,0 +1,60 @@
+covariance model: hybrid
+components:
+- covariance:
+    covariance model: SABER
+    saber central block:
+      saber block name: gsi static covariance
+      read:
+        gsi akbk: {{atmosphere_fv3jedi_files_path}}/akbk66.nc4
+        gsi error covariance file: {{atmosphere_gsibec_path}}/gsi-coeffs-gfs-global.nc4
+        gsi berror namelist file: {{atmosphere_gsibec_path}}/gfs_gsi_global.nml
+        processor layout x direction: {{atmosphere_layout_gsib_x}}
+        processor layout y direction: {{atmosphere_layout_gsib_y}}
+        debugging mode: false
+    saber outer blocks:
+    - saber block name: gsi interpolation to model grid
+      gsi akbk: {{atmosphere_fv3jedi_files_path}}/akbk66.nc4
+      gsi error covariance file: {{atmosphere_gsibec_path}}/gsi-coeffs-gfs-global.nc4
+      gsi berror namelist file: {{atmosphere_gsibec_path}}/gfs_gsi_global.nml
+      processor layout x direction: {{atmosphere_layout_gsib_x}}
+      processor layout y direction: {{atmosphere_layout_gsib_y}}
+      debugging mode: false
+    linear variable change:
+      linear variable change name: Control2Analysis
+      input variables: [eastward_wind,northward_wind,air_temperature,air_pressure_at_surface,
+                                      water_vapor_mixing_ratio_wrt_moist_air,cloud_liquid_ice,cloud_liquid_water,
+                                      mole_fraction_of_ozone_in_air]
+      output variables: [eastward_wind,northward_wind,air_temperature,air_pressure_thickness,water_vapor_mixing_ratio_wrt_moist_air,cloud_liquid_ice,cloud_liquid_water,ozone_mass_mixing_ratio]
+  weight:
+    value: 0.125
+- covariance:
+    covariance model: ensemble
+    members from template:
+      template:
+        datetime: "{{ atmosphere_background_time_iso }}"
+        filetype: fms restart
+        provider: ufs
+        state variables: [eastward_wind,northward_wind,u_component_of_native_D_grid_wind,v_component_of_native_D_grid_wind,air_temperature,air_pressure_thickness,water_vapor_mixing_ratio_wrt_moist_air,cloud_liquid_ice,cloud_liquid_water,ozone_mass_mixing_ratio,phis,f10m]
+        datapath: {{ atmosphere_background_ensemble_path }}
+        filename is datetime templated: true
+        filename_core: fv_core.res.tile1.nc
+        filename_trcr: fv_tracer.res.tile1.nc
+        filename_sfcd: sfc_data.nc
+        filename_sfcw: fv_srf_wnd.res.tile1.nc
+        filename_cplr: coupler.res
+      pattern: "%mem%"
+      nmembers: {{atmosphere_number_ensemble_members}}
+      zero padding: 3
+    localization:
+      localization method: SABER
+      saber central block:
+        saber block name: BUMP_NICAS
+        active variables: [eastward_wind,northward_wind,u_component_of_native_D_grid_wind,v_component_of_native_D_grid_wind,air_temperature,air_pressure_thickness,water_vapor_mixing_ratio_wrt_moist_air,cloud_liquid_ice,cloud_liquid_water,ozone_mass_mixing_ratio,phis,f10m]
+        read:
+          drivers:
+            multivariate strategy: duplicated
+            compute nicas: true
+          model:
+            level for 2d variables: last
+  weight:
+    value: 0.875
