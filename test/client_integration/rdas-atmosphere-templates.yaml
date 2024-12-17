@@ -23,7 +23,8 @@ app_path_observation_chronicle: rdas/observation_chronicle/atmosphere
 
 # Places where we deviate from the generic file name of a yaml
 # ------------------------------------------------------------
-final_increment_file: atmosphere_final_increment_gaussian
+#final_increment_file: atmosphere_final_increment_gaussian
+output_file: atmosphere_output
 output_ensemble_increments_file: atmosphere_output_ensemble_increments_gaussian
 model_file: atmosphere_model_pseudo
 initial_condition_file: atmosphere_background
@@ -36,7 +37,7 @@ window_begin: '2024-05-26T21:00:00Z'
 window_length: PT6H
 bound_to_include: begin
 minimizer: DRPCG
-final_diagnostics_departures: anlmob
+final_diagnostics_departures: oman
 analysis_variables: [eastward_wind,northward_wind,air_temperature,air_pressure_thickness,water_vapor_mixing_ratio_wrt_moist_air,cloud_liquid_ice,cloud_liquid_water,ozone_mass_mixing_ratio]
 number_of_outer_loops: 2
 
@@ -49,22 +50,27 @@ do_testing: false
 # ------------
 atmosphere_layout_x: 16
 atmosphere_layout_y: 10
-atmosphere_npx_ges: 361
-atmosphere_npy_ges: 361
+atmosphere_npx_ges: 420 #not sure if correct
+atmosphere_npy_ges: 252 #not sure if correct
 atmosphere_npz_ges: 65
-atmosphere_npx_anl: 361
-atmosphere_npy_anl: 361
+atmosphere_npx_anl: 420 #not sure if correct
+atmosphere_npy_anl: 252 #not sure if correct
 atmosphere_npz_anl: 65
-atmosphere_fv3jedi_files_path: DATA/fv3jedi
+atmosphere_fv3jedi_files_path: DataFix #DATA/fv3jedi
+atmosphere_fv3jedi_files_path: DataFix #DATA/fv3jedi
+atmosphere_ntiles: 1
+atmosphere_io_layout_x: 1
+atmosphere_io_layout_y: 1
 
 # Background
-atmosphere_background_path: DATA/bkg
-atmosphere_background_ensemble_path: "DATA/ens/mem%mem%"
+atmosphere_background_path: Data/bkg
+atmosphere_background_ensemble_path: "Data/inputs/mem%mem%"
 
 atmosphere_variational_history_prefix: "bkg_"
 atmosphere_ensemble_history_prefix: "ens_"
 
 atmosphere_background_time_iso: '2024-05-27T00:00:00Z'
+atmosphere_background_time_prefix: '20240527.000000.'
 
 # Background error
 
@@ -87,19 +93,19 @@ atmosphere_final_increment_prefix: "./anl/atminc."
 # ------------------
 observations: all_observations
 
-crtm_coefficient_path: "DATA/crtm/"
+crtm_coefficient_path: "Data/crtm"
 
 # Naming conventions for observational files
-atmosphere_obsdatain_path: DATA/obs
-atmosphere_obsdatain_prefix: OPREFIX
+atmosphere_obsdatain_path: Data/obs
+atmosphere_obsdatain_prefix: OPREFIX_
 atmosphere_obsdatain_suffix: ".2024052700.nc"
 
-atmosphere_obsdataout_path: DATA/diags
-atmosphere_obsdataout_prefix: diag
+atmosphere_obsdataout_path: Data/diags
+atmosphere_obsdataout_prefix: diag_
 atmosphere_obsdataout_suffix: "_2024052700.nc"
 
 # Naming conventions for bias correction files
-atmosphere_obsbiasin_path: DATA/obs
+atmosphere_obsbiasin_path: Data/obs
 atmosphere_obsbiasin_prefix: GPREFIX
 atmosphere_obsbiasin_suffix: ".satbias.nc"
 atmosphere_obstlapsein_prefix: GPREFIX
@@ -107,7 +113,7 @@ atmosphere_obstlapsein_suffix: ".tlapse.txt"
 atmosphere_obsbiascovin_prefix: GPREFIX
 atmosphere_obsbiascovin_suffix: ".satbias_cov.nc"
 
-atmosphere_obsbiasout_path: DATA/bc
+atmosphere_obsbiasout_path: Data/bc
 atmosphere_obsbiasout_prefix: APREFIX
 atmosphere_obsbiasout_suffix: ".satbias.nc"
 atmosphere_obsbiascovout_prefix: APREFIX

@@ -4,11 +4,20 @@
     fms initialization:
       namelist filename: {{atmosphere_fv3jedi_files_path}}/fmsmpp.nml
       field table filename: {{atmosphere_fv3jedi_files_path}}/field_table
-    akbk: {{atmosphere_fv3jedi_files_path}}/akbk66.nc4
+    akbk: {{atmosphere_fv3jedi_files_path}}/fix/akbk66.nc
     layout:
     - {{atmosphere_layout_x}}
     - {{atmosphere_layout_y}}
-    npx: {{atmosphere_npx_anl}}
-    npy: {{atmosphere_npy_anl}}
+    io_layout:
+    - {{atmosphere_io_layout_x}}
+    - {{atmosphere_io_layout_x}}
+    #npx: {{atmosphere_npx_anl}}
+    #npy: {{atmosphere_npy_anl}}
     npz: {{atmosphere_npz_anl}}
-    field metadata override: {{atmosphere_fv3jedi_files_path}}/tlei-gfs-restart.yaml
+    namelist filename: {{atmosphere_fv3jedi_files_path}}/input_lam_C775_NP16X10.nml
+    field metadata override: "Data/fieldmetadata/tlei-gfs-restart.yaml"
+    ntiles: {{atmosphere_ntiles}}
+    fieldsets:
+    - fieldset: {{atmosphere_fv3jedi_files_path}}/fix/dynamics_lam_cmaq.yaml
+  diagnostics:
+    departures: ombg

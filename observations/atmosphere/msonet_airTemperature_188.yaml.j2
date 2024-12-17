@@ -9,11 +9,13 @@
     obsdatain:
       engine:
         type: H5File
-        obsfile: "{{atmosphere_obsdatain_path}}/{{atmosphere_obsdatain_prefix}}{{observation_from_jcb}}{{atmosphere_obsdatain_suffix}}"
+        #obsfile: "{{atmosphere_obsdatain_path}}/{{observation_from_jcb}}{{atmosphere_obsdatain_suffix}}"
+        obsfile: "data/obs/ioda_msonet.nc"
     obsdataout:
       engine:
         type: H5File
-        obsfile: "{{atmosphere_obsdataout_path}}/{{atmosphere_obsdataout_prefix}}{{observation_from_jcb}}{{atmosphere_obsdataout_suffix}}"
+        #obsfile: "{{atmosphere_obsdataout_path}}/{{observation_from_jcb}}{{atmosphere_obsdataout_suffix}}"
+        obsfile: "jdiag_msonet_airTemperature_188.nc4"
         allow overwrite: true
     io pool:
       max pool size: 1
@@ -206,7 +208,7 @@
     - filter: Temporal Thinning
       apply at iterations: 0,1
       min_spacing: PT15M
-      seed_time: {{atmosphere_background_time_iso}}
+      seed_time: "{{atmosphere_background_time_iso}}"
       category_variable:
         name: MetaData/stationIdentification
       defer to post: true

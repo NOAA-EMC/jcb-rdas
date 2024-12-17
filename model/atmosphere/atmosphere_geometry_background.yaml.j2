@@ -1,11 +1,12 @@
 fms initialization:
   namelist filename: "{{atmosphere_fv3jedi_files_path}}/fmsmpp.nml"
   field table filename: "{{atmosphere_fv3jedi_files_path}}/field_table"
-akbk: "{{atmosphere_fv3jedi_files_path}}/akbk66.nc4"
-layout:
-- {{atmosphere_layout_x}}
-- {{atmosphere_layout_y}}
-npx: {{atmosphere_npx_ges}}
-npy: {{atmosphere_npy_ges}}
+namelist filename: "{{atmosphere_fv3jedi_files_path}}/input_lam_C775_NP16X10.nml"
+field metadata override: "Data/fieldmetadata/tlei-gfs-restart.yaml"
+akbk: "{{atmosphere_fv3jedi_files_path}}/fix/akbk66.nc"
+#npx: {{atmosphere_npx_ges}}
+#npy: {{atmosphere_npy_ges}}
 npz: {{atmosphere_npz_ges}}
-field metadata override: "{{atmosphere_fv3jedi_files_path}}/fv3jedi_fieldmetadata_history.yaml"
+layout: [{{atmosphere_layout_x}}, {{atmosphere_layout_y}}]
+io_layout: [{{atmosphere_io_layout_x}}, {{atmosphere_io_layout_y}}]
+ntiles: {{atmosphere_ntiles}}
