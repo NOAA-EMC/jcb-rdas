@@ -1,0 +1,29 @@
+    covariance model: ensemble
+    members from template:
+      template:
+        datetime: "{{ atmosphere_background_time_iso }}"
+        filetype: fms restart
+        state variables: [eastward_wind,northward_wind,air_temperature,air_pressure_thickness,water_vapor_mixing_ratio_wrt_moist_air,cloud_liquid_ice,cloud_liquid_water,ozone_mass_mixing_ratio] 
+        datapath: {{ atmosphere_background_ensemble_path }}
+        #filename is datetime templated: true
+        filename_core: {{atmosphere_background_time_prefix}}fv_core.res.tile1.nc
+        filename_trcr: {{atmosphere_background_time_prefix}}fv_tracer.res.tile1.nc
+        filename_sfcd: {{atmosphere_background_time_prefix}}sfc_data.nc
+        filename_sfcw: {{atmosphere_background_time_prefix}}fv_srf_wnd.res.tile1.nc
+        filename_cplr: {{atmosphere_background_time_prefix}}coupler.res
+      pattern: "%mem%"
+      nmembers: {{atmosphere_number_ensemble_members}}
+      zero padding: 3
+    localization:
+      localization method: SABER
+      saber central block:
+        saber block name: BUMP_NICAS
+        active variables: [eastward_wind,northward_wind,air_temperature,air_pressure_thickness,water_vapor_mixing_ratio_wrt_moist_air,cloud_liquid_ice,cloud_liquid_water,ozone_mass_mixing_ratio] 
+        read:
+          io:
+            files prefix: DataFix/bump_new/bumploc_300km_0.3vloc
+          drivers:
+            multivariate strategy: duplicated
+            read local nicas: true
+          model:
+            level for 2d variables: last
