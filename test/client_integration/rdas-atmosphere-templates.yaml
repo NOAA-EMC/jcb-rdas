@@ -3,11 +3,11 @@
 supported_algorithms:
 - 3dvar
 - hofx3d
-- hofx4d
-- local_ensemble_da
+#- hofx4d
+#- local_ensemble_da
 # Local algorithms
-- fv3jedi_fv3inc_lgetkf
-- fv3jedi_fv3inc_variational
+#- fv3jedi_fv3inc_lgetkf
+#- fv3jedi_fv3inc_variational
 
 # This is overwritten in the testing but allows command line test of jcb
 #algorithm: fv3jedi_fv3inc_variational
