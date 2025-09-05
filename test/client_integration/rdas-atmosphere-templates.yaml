@@ -110,6 +110,8 @@ atmosphere_final_increment_prefix: "./anl/atminc."
 # Observation things
 # ------------------
 observations:
+observations: all_observations
+
 # Upper-air conventional
 #- adpupa_airTemperature_120
 #- adpupa_airTemperature_132
@@ -119,7 +121,7 @@ observations:
 #- adpupa_winds_220
 #- adpupa_winds_232
 
-- aircar_airTemperature_133
+#- aircar_airTemperature_133
 #- aircar_specificHumidity_133
 #- aircar_winds_233
 
@@ -165,8 +167,6 @@ observations:
 #- sfcshp_winds_280
 #- sfcshp_winds_282
 #- sfcshp_winds_284
-
-#observations: all_observations
 
 # Upper-air conventional
 iuse_adpupa_airTemperature_120: accept
