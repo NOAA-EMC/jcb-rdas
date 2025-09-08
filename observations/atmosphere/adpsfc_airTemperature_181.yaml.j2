@@ -1,12 +1,12 @@
      - obs space:
-         name: msonet_airTemperature_188
+         name: adpsfc_airTemperature_181
          distribution:
            name: "{{distribution}}"
            halo size: 500e3
          obsdatain:
            engine:
              type: H5File
-             obsfile: "data/obs/ioda_msonet.nc"
+             obsfile: "data/obs/ioda_adpsfc.nc"
              missing file action: "warn"
            obsgrouping:
              group variables: ["stationIdentification"]
@@ -15,7 +15,7 @@
          obsdataout:
            engine:
              type: H5File
-             obsfile: jdiag_msonet_airTemperature_188.nc
+             obsfile: jdiag_adpsfc_airTemperature_181.nc
              allow overwrite: true
          io pool:
            max pool size: 1
@@ -29,7 +29,7 @@
            observation vertical coordinate group: MetaData
            interpolation method: log-linear
            #gsi geovals:
-           #  filename: "obsout/sfc_tsen_geoval_2022052619.nc"
+           #  filename: "obsout/sfc_tsen_geoval_2024052700.nc"
            #  levels_are_top_down: False
            variables:
            - name: airTemperature
@@ -46,7 +46,7 @@
 
        obs filters:
          # ------------------
-         # airTemperature (188)
+         # airTemperature (181)
          # ------------------
          # Accept, reject, or passivate (monitor)
          - filter: Perform Action
@@ -54,9 +54,9 @@
            - name: airTemperature
            where:
            - variable: ObsType/airTemperature
-             is_in: 188
+             is_in: 181
            action:
-             name: {{iuse_msonet_airTemperature_188 | default("passivate", true)}} # accept, reject, passivate
+             name: {{iuse_adpsfc_airTemperature_181 | default("passivate", true)}} # accept, reject, passivate
 
          # Reject all obs not in type
          - filter: Perform Action
@@ -64,7 +64,7 @@
            - name: airTemperature
            where:
            - variable: ObsType/airTemperature
-             is_not_in: 188
+             is_not_in: 181
            action:
              name: reduce obs space
 
@@ -117,7 +117,7 @@
            - name: airTemperature
            where:
            - variable: ObsType/airTemperature
-             is_in: 188
+             is_in: 181
            action:
              name: assign error
              error function:
@@ -126,7 +126,15 @@
                  xvar:
                    name: MetaData/pressure
                  xvals: [110000, 105000, 100000, 95000, 90000, 85000, 80000, 75000, 70000, 65000, 60000, 55000, 50000, 45000, 40000, 35000, 30000, 25000, 20000, 15000, 10000, 7500, 5000, 4000, 3000, 2000, 1000, 500, 400, 300, 200, 100, 0]
-                 errors: [4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0]
+                 errors: [1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056, 1.5056]
+
+#         # Reduce observation error and turn off ObsErrorFactorPressureCheck (l_gsd_terrain_match_surfTobs=.true., l_sfcobserror_ramp_t=.true.,)
+#         - filter: Perform Action
+#           filter variables:
+#           - name: airTemperature
+#           action:
+#             name: inflate error
+#             inflation factor: 0.5
 
          # Error inflation based on pressure check (setupt.f90)
          - filter: Perform Action
@@ -134,7 +142,7 @@
            - name: airTemperature
            where:
            - variable: ObsType/airTemperature
-             is_in: 188
+             is_in: 181
            action:
              name: inflate error
              inflation variable:
@@ -149,7 +157,7 @@
 #           - name: airTemperature
 #           where:
 #           - variable: ObsType/airTemperature
-#             is_in: 188
+#             is_in: 181
 #           action:
 #             name: inflate error
 #             inflation variable:
@@ -252,7 +260,7 @@
            apply at iterations: 0,1
            filter variables:
            - name: airTemperature
-           threshold: 1.1
+           threshold: 5.0
            action:
              name: reject
            where:
@@ -266,7 +274,7 @@
            apply at iterations: 0,1
            filter variables:
            - name: airTemperature
-           threshold: 0.77
+           threshold: 3.5
            action:
              name: reject
            where:
@@ -290,4 +298,4 @@
            defer to post: true
 
          #- filter: GOMsaver
-         #  filename: ./data/geovals/msonet_geovals_rrfs.nc
+         #  filename: ./data/geovals/adpsfc_geovals_rrfs.nc
